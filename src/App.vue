@@ -1,28 +1,35 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <div style="height: 100%" v-if="loading">
+      <v-progress-linear active indeterminate absolute top color="deep-purple accent-4"></v-progress-linear>
+      <div class="d-flex justify-center align-center" style="height: 100%">
+        <v-progress-circular :size="70" :width="7" color="purple" indeterminate></v-progress-circular>
+      </div>
+    </div>
+    <router-view></router-view>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+
+  data: () => ({
+    loading: false,
+  }),
+  created() {
+    console.log('********', this.$route)
+    const { name } = this.$route
+    this.loading = !name
+    setTimeout(() => {
+      this.routeToLoginPage()
+      this.loading = false
+    }, 5000)
+  },
+  methods: {
+    routeToLoginPage() {
+      this.$router.push('/login').catch(() => {})
+    },
+  },
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
