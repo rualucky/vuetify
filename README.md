@@ -1,4 +1,4 @@
-# app_1
+# Using & Customize Vuetify
 
 ## Project setup
 
